@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Mi Hobbie: Fútbol</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+	<header class="site-header">
+		<div class="container">
+			<h1>Mi Hobbie: Fútbol</h1>
+			<nav class="nav">
+				<a href="#sobre-mi">Sobre mí</a>
+				<a href="#galeria">Galería</a>
+				<a href="#contacto">Contacto</a>
+			</nav>
+		</div>
+	</header>
+
+	<section class="hero">
+		<div class="container">
+			<h2>Pasión por el balón</h2>
+			<p>Partidos y momentos inolvidables en la cancha.</p>
+			<a class="btn" href="#galeria">Ver galería</a>
+		</div>
+	</section>
+
+	<main>
+		<section id="sobre-mi" class="sobre-mi container">
+			<h3>Sobre mí</h3>
+			<p>
+				Soy aficionado al fútbol y juego partidos con amigos y en ligas locales.
+				En esta página comparto algunas fotos de mis partidos, entrenamientos y logros.
+			</p>
+		</section>
+
+		<section id="galeria" class="galeria container">
+			<h3>Galería de imágenes</h3>
+
+			<div class="grid-galeria">
+				<figure class="item">
+					<img src="/images/partido1.jpg" alt="Calentamiento antes del partido" loading="lazy" />
+					<figcaption>Calentamiento previo</figcaption>
+				</figure>
+				<figure class="item">
+					<img src="/images/partido2.PNG" alt="Disparo a puerta durante el partido" loading="lazy" />
+					<figcaption>Disparo a puerta</figcaption>
+				</figure>
+				<figure class="item">
+					<img src="/images/partido3.jpg" alt="Celebración tras el gol" loading="lazy" />
+					<figcaption>Celebración</figcaption>
+				</figure>
+				<figure class="item">
+					<img src="/images/partido4.PNG" alt="Defensa robando el balón" loading="lazy" />
+					<figcaption>Robo en defensa</figcaption>
+				</figure>
+				<figure class="item">
+					<img src="/images/partido5.PNG" alt="Pase en medio campo" loading="lazy" />
+					<figcaption>Pase en medio campo</figcaption>
+				</figure>
+				<figure class="item">
+					<img src="/images/partido6.jpg" alt="Portero atajando el balón" loading="lazy" />
+					<figcaption>Equipo</figcaption>
+				</figure>
+			</div>
+		</section>
+
+		<!-- SECCIÓN DE COMENTARIOS -->
+		<section id="comentarios" class="container" style="padding:24px 0;">
+			<h3>Comentarios</h3>
+
+			<!-- Form: tiene action y method para fallback sin JS -->
+			<form id="comment-form" action="/comentarios" method="post">
+				<textarea id="comment-text" name="comentario" rows="3" placeholder="Escribe tu comentario..." required style="width:100%; padding:10px; border-radius:8px; border:1px solid #202535; background:var(--card); color:var(--text);"></textarea>
+				<button type="submit" class="btn" style="margin-top:10px;">Enviar</button>
+			</form>
+
+			<div id="comments-list" style="margin-top:16px;">
+				<% if (comentarios && comentarios.length > 0) { %>
+					<% comentarios.forEach(function(comment) { %>
+						<div class="comment" data-id="<%= comment.id %>">
+							<div class="comment-content"><%= comment.texto %></div>
+							<div class="comment-meta">
+								<span class="comment-date"><%= comment.fecha %></span>
+								<span class="comment-time"><%= comment.hora %></span>
+							</div>
+						</div>
+					<% }) %>
+				<% } else { %>
+					<p id="no-comments">No hay comentarios todavía.</p>
+				<% } %>
+			</div>
+		</section>
+	</main>
+
+	<footer id="contacto" class="site-footer">
+		<div class="container">
+			<p>&copy; <span id="year"></span> Mi Hobbie: Fútbol</p>
+			<p>
+				Contáctame:
+				<a href="mailto:tucorreo@ejemplo.com">tucorreo@ejemplo.com</a>
+			</p>
+		</div>
+	</footer>
+
+	<!-- Lightbox (visor de imagen) -->
+	<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Visor de imagen">
+		<button class="lightbox__close" aria-label="Cerrar (Esc)">&times;</button>
+		<button class="lightbox__nav lightbox__prev" aria-label="Anterior">&#10094;</button>
+		<button class="lightbox__nav lightbox__next" aria-label="Siguiente">&#10095;</button>
+		<img class="lightbox__img" src="" alt="" />
+		<p class="lightbox__caption"></p>
+	</div>
+
+	<!-- Inyectamos comentarios iniciales desde la sesión -->
+	<script>
+		const INITIAL_COMMENTS = JSON.parse('<%- JSON.stringify(comentarios || []) %>');
+	</script>
+
+	<!-- Tu script combinado: lightbox + comentarios -->
+	<script src="/script.js" defer></script>
+</body>
+</html>
+
